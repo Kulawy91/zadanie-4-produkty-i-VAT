@@ -25,5 +25,5 @@ namespace zadanie_4_produkty_i_VAT
         string KategoriaVAT { get; }
         string KrajPochodzenia { get; }
     }
-
 }
+

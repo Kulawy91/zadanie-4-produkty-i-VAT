@@ -6,20 +6,13 @@ class Program
 {
     static void Main()
     {
-        Dictionary<string, decimal> VATDictionary = new Dictionary<string, decimal>()
-        {
-            { "0%", 0 },
-            { "5%", 5 },
-            { "8%", 8 },
-            { "23%", 23 }
-        };
-
         // Przykładowe użycie klas i interfejsów
         var produktSpozywczy = new ProduktSpozywczy()
         {
             Nazwa = "Jabłko",
             CenaNetto = 2.5m,
-            KrajPochodzenia = "Polska"
+            KrajPochodzenia = "Polska",
+            KategoriaVAT = "23%"
         };
 
         var wielopak = new Wielopak<ProduktSpozywczy>()
@@ -31,5 +24,8 @@ class Program
 
         Console.WriteLine($"Nazwa produktu: {wielopak.Produkt.Nazwa}");
         Console.WriteLine($"Cena brutto wielopaku: {wielopak.CenaBrutto}");
+
+        Console.ReadLine();
     }
 }
+

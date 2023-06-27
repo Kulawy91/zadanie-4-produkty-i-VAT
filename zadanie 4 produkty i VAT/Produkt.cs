@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static zadanie_4_produkty_i_VAT.IProdukt;
 
 namespace zadanie_4_produkty_i_VAT
 {
@@ -13,13 +14,20 @@ namespace zadanie_4_produkty_i_VAT
         public abstract decimal VAT { get; }
         public decimal CenaBrutto => CenaNetto * (1 + VAT / 100);
         public string KrajPochodzenia { get; set; }
-        public abstract string KategoriaVAT { get; }
+        public string KategoriaVAT { get; set; }
+
+        protected static Dictionary<string, decimal> VATDictionary = new Dictionary<string, decimal>()
+    {
+        { "0%", 0 },
+        { "5%", 5 },
+        { "8%", 8 },
+        { "23%", 23 }
+    };
     }
 
     public class ProduktSpozywczy : Produkt
     {
-        public override decimal VAT => 23;
-        public override string KategoriaVAT => "23%";
+        public override decimal VAT => VATDictionary[KategoriaVAT];
     }
 
     public class ProduktSpozywczyNaWage : ProduktSpozywczy
@@ -43,7 +51,7 @@ namespace zadanie_4_produkty_i_VAT
         public ushort Ilosc { get; set; }
         public decimal CenaNetto { get; set; }
 
-        public decimal CenaBrutto => Produkt.CenaBrutto * Ilosc;
+        public decimal CenaBrutto => Produkt.CenaNetto * Ilosc * (1 + Produkt.VAT / 100);
         public string KategoriaVAT => Produkt.KategoriaVAT;
         public string KrajPochodzenia => Produkt.KrajPochodzenia;
     }
