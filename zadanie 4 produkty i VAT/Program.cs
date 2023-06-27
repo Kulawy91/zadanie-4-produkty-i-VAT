@@ -10,8 +10,8 @@ class Program
         var produktSpozywczy = new ProduktSpozywczy()
         {
             Nazwa = "Jabłko",
-            CenaNetto = 2.5m,
-            KrajPochodzenia = "Twoja stara",
+            CenaNetto = -2.5m,
+            KrajPochodzenia = "Polska",
             KategoriaVAT = "8%"
         };
 

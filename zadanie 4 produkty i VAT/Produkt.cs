@@ -10,7 +10,18 @@ namespace zadanie_4_produkty_i_VAT
     public abstract class Produkt : IProdukt
     {
         public string Nazwa { get; set; }
-        public decimal CenaNetto { get; set; }
+        private decimal cenaNetto;
+        public decimal CenaNetto
+        {
+            get => cenaNetto;
+            set
+            {
+                if (value > 0)
+                    cenaNetto = value;
+                else
+                    throw new ArgumentException("Cena netto musi być większa od zera.");
+            }
+        }
         public abstract decimal VAT { get; }
         public decimal CenaBrutto => CenaNetto * (1 + VAT / 100);
         private string krajPochodzenia;
@@ -69,7 +80,18 @@ namespace zadanie_4_produkty_i_VAT
     {
         public T Produkt { get; set; }
         public ushort Ilosc { get; set; }
-        public decimal CenaNetto { get; set; }
+        private decimal cenaNetto;
+        public decimal CenaNetto
+        {
+            get => cenaNetto;
+            set
+            {
+                if (value > 0)
+                    cenaNetto = value;
+                else
+                    throw new ArgumentException("Cena netto musi być większa od zera.");
+            }
+        }
 
         public decimal CenaBrutto => Produkt.CenaNetto * Ilosc * (1 + Produkt.VAT / 100);
         public string KategoriaVAT => Produkt.KategoriaVAT;
