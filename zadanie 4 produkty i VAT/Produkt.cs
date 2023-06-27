@@ -37,7 +37,7 @@ namespace zadanie_4_produkty_i_VAT
             }
         }
 
-        public string KategoriaVAT { get; set; }
+        public abstract string KategoriaVAT { get; }
 
         protected static Dictionary<string, decimal> VATDictionary = new Dictionary<string, decimal>()
         {
@@ -58,7 +58,8 @@ namespace zadanie_4_produkty_i_VAT
 
     public class ProduktSpozywczy : Produkt
     {
-        public override decimal VAT => VATDictionary[KategoriaVAT];
+        public override decimal VAT => 0;
+        public override string KategoriaVAT => "0%";
     }
 
     public class ProduktSpozywczyNaWage : ProduktSpozywczy
@@ -98,4 +99,3 @@ namespace zadanie_4_produkty_i_VAT
         public string KrajPochodzenia => Produkt.KrajPochodzenia;
     }
 }
-
