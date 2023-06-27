@@ -7,12 +7,8 @@ class Program
     static void Main()
     {
         // Przykładowe użycie klas i interfejsów
-        var produktSpozywczy = new ProduktSpozywczy()
-        {
-            Nazwa = "Jabłko",
-            CenaNetto = 2.5m,
-            KrajPochodzenia = "Polska"
-        };
+        var produkt = new Produkt("Gruszka", 10.0m, "5%", "Polska");
+        var produktSpozywczy = new ProduktSpozywczy("Pomarancza", 10.0m, "23%", "Polska");
 
         var wielopak = new Wielopak<ProduktSpozywczy>()
         {
@@ -24,7 +20,6 @@ class Program
         Console.WriteLine($"Nazwa produktu: {wielopak.Produkt.Nazwa}");
         Console.WriteLine($"Cena brutto wielopaku: {wielopak.CenaBrutto}");
         Console.WriteLine($"Kraj: {wielopak.KrajPochodzenia}");
-        Console.WriteLine($"Vat: {wielopak.KategoriaVAT}");
 
         Console.ReadLine();
     }

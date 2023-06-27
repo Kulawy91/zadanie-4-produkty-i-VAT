@@ -7,23 +7,27 @@ using static zadanie_4_produkty_i_VAT.IProdukt;
 
 namespace zadanie_4_produkty_i_VAT
 {
-    public abstract class Produkt : IProdukt
+    public class Produkt : IProdukt
     {
         public string Nazwa { get; set; }
+
         private decimal cenaNetto;
         public decimal CenaNetto
         {
-            get => cenaNetto;
+            get { return cenaNetto; }
             set
             {
-                if (value > 0)
-                    cenaNetto = value;
-                else
-                    throw new ArgumentException("Cena netto musi być większa od zera.");
+                if (value < 0)
+                {
+                    throw new ArgumentException("Cena netto nie może być ujemna");
+                }
+                cenaNetto = value;
             }
         }
-        public abstract decimal VAT { get; }
+
+        public virtual decimal VAT => VATDictionary[KategoriaVAT];
         public decimal CenaBrutto => CenaNetto * (1 + VAT / 100);
+
         private string krajPochodzenia;
         public string KrajPochodzenia
         {
@@ -37,43 +41,70 @@ namespace zadanie_4_produkty_i_VAT
             }
         }
 
-        public abstract string KategoriaVAT { get; }
+        public string KategoriaVAT { get; set; }
 
         protected static Dictionary<string, decimal> VATDictionary = new Dictionary<string, decimal>()
-        {
-            { "0%", 0 },
-            { "5%", 5 },
-            { "8%", 8 },
-            { "23%", 23 }
-        };
+    {
+        { "0%", 0 },
+        { "5%", 5 },
+        { "8%", 8 },
+        { "23%", 23 }
+    };
 
         private static readonly HashSet<string> DostepneKraje = new HashSet<string>()
+    {
+        "Polska",
+        "Niemcy",
+        "Francja",
+        "Włochy"
+    };
+
+        public Produkt(string nazwa, decimal cenaNetto, string kategoriaVAT, string krajPochodzenia)
         {
-            "Polska",
-            "Niemcy",
-            "Francja",
-            "Włochy"
-        };
+            Nazwa = nazwa;
+            CenaNetto = cenaNetto;
+            KategoriaVAT = kategoriaVAT;
+            KrajPochodzenia = krajPochodzenia;
+        }
     }
 
     public class ProduktSpozywczy : Produkt
     {
+        public ProduktSpozywczy(string nazwa, decimal cenaNetto, string kategoriaVAT, string krajPochodzenia)
+            : base(nazwa, cenaNetto, kategoriaVAT, krajPochodzenia)
+        {
+        }
+
         public override decimal VAT => 0;
-        public override string KategoriaVAT => "0%";
     }
 
     public class ProduktSpozywczyNaWage : ProduktSpozywczy
     {
+        public ProduktSpozywczyNaWage(string nazwa, decimal cenaNetto, string kategoriaVAT, string krajPochodzenia)
+            : base(nazwa, cenaNetto, kategoriaVAT, krajPochodzenia)
+        {
+        }
+
         public decimal Waga { get; set; }
     }
 
     public class ProduktSpozywczyPaczka : ProduktSpozywczy
     {
+        public ProduktSpozywczyPaczka(string nazwa, decimal cenaNetto, string kategoriaVAT, string krajPochodzenia)
+            : base(nazwa, cenaNetto, kategoriaVAT, krajPochodzenia)
+        {
+        }
+
         public decimal Waga { get; set; }
     }
 
     public class ProduktSpozywczyNapoj<T> : ProduktSpozywczyPaczka
     {
+        public ProduktSpozywczyNapoj(string nazwa, decimal cenaNetto, string kategoriaVAT, string krajPochodzenia)
+            : base(nazwa, cenaNetto, kategoriaVAT, krajPochodzenia)
+        {
+        }
+
         public T Objetosc { get; set; }
     }
 
@@ -81,18 +112,7 @@ namespace zadanie_4_produkty_i_VAT
     {
         public T Produkt { get; set; }
         public ushort Ilosc { get; set; }
-        private decimal cenaNetto;
-        public decimal CenaNetto
-        {
-            get => cenaNetto;
-            set
-            {
-                if (value > 0)
-                    cenaNetto = value;
-                else
-                    throw new ArgumentException("Cena netto musi być większa od zera.");
-            }
-        }
+        public decimal CenaNetto { get; set; }
 
         public decimal CenaBrutto => Produkt.CenaNetto * Ilosc * (1 + Produkt.VAT / 100);
         public string KategoriaVAT => Produkt.KategoriaVAT;

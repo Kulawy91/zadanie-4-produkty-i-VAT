@@ -26,4 +26,3 @@ namespace zadanie_4_produkty_i_VAT
         string KrajPochodzenia { get; }
     }
 }
-
