@@ -11,8 +11,8 @@ class Program
         {
             Nazwa = "Jabłko",
             CenaNetto = 2.5m,
-            KrajPochodzenia = "Polska",
-            KategoriaVAT = "23%"
+            KrajPochodzenia = "Twoja stara",
+            KategoriaVAT = "8%"
         };
 
         var wielopak = new Wielopak<ProduktSpozywczy>()
@@ -24,6 +24,7 @@ class Program
 
         Console.WriteLine($"Nazwa produktu: {wielopak.Produkt.Nazwa}");
         Console.WriteLine($"Cena brutto wielopaku: {wielopak.CenaBrutto}");
+        Console.WriteLine($"Kraj: {wielopak.KrajPochodzenia}");
 
         Console.ReadLine();
     }

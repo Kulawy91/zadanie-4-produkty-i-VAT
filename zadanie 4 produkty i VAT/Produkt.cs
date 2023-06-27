@@ -13,16 +13,36 @@ namespace zadanie_4_produkty_i_VAT
         public decimal CenaNetto { get; set; }
         public abstract decimal VAT { get; }
         public decimal CenaBrutto => CenaNetto * (1 + VAT / 100);
-        public string KrajPochodzenia { get; set; }
+        private string krajPochodzenia;
+        public string KrajPochodzenia
+        {
+            get => krajPochodzenia;
+            set
+            {
+                if (DostepneKraje.Contains(value))
+                    krajPochodzenia = value;
+                else
+                    throw new ArgumentException("Nieprawidłowy kraj pochodzenia.");
+            }
+        }
+
         public string KategoriaVAT { get; set; }
 
         protected static Dictionary<string, decimal> VATDictionary = new Dictionary<string, decimal>()
-    {
-        { "0%", 0 },
-        { "5%", 5 },
-        { "8%", 8 },
-        { "23%", 23 }
-    };
+        {
+            { "0%", 0 },
+            { "5%", 5 },
+            { "8%", 8 },
+            { "23%", 23 }
+        };
+
+        private static readonly HashSet<string> DostepneKraje = new HashSet<string>()
+        {
+            "Polska",
+            "Niemcy",
+            "Francja",
+            "Włochy"
+        };
     }
 
     public class ProduktSpozywczy : Produkt
@@ -55,5 +75,5 @@ namespace zadanie_4_produkty_i_VAT
         public string KategoriaVAT => Produkt.KategoriaVAT;
         public string KrajPochodzenia => Produkt.KrajPochodzenia;
     }
-
 }
+
