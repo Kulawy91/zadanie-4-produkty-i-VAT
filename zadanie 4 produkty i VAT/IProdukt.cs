@@ -10,9 +10,8 @@ namespace zadanie_4_produkty_i_VAT
     {
         string Nazwa { get; set; }
         decimal CenaNetto { get; set; }
-        decimal VAT { get; }
-        decimal CenaBrutto { get; }
         string KategoriaVAT { get; }
+        decimal CenaBrutto { get; }
         string KrajPochodzenia { get; set; }
     }
 
@@ -25,4 +24,6 @@ namespace zadanie_4_produkty_i_VAT
         string KategoriaVAT { get; }
         string KrajPochodzenia { get; }
     }
+
 }
+

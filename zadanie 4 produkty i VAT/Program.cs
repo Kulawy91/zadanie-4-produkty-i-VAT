@@ -6,21 +6,34 @@ class Program
 {
     static void Main()
     {
-        // Przykładowe użycie klas i interfejsów
-        var produkt = new Produkt("Gruszka", 10.0m, "5%", "Polska");
-        var produktSpozywczy = new ProduktSpozywczy("Pomarancza", 10.0m, "23%", "Polska");
+        var produktSpozywczy = new ProduktSpozywczy()
+        {
+            Nazwa = "Chleb",
+            CenaNetto = 3.5m,
+            KrajPochodzenia = "Polska",
+            Kalorie = 200,
+            Alergeny = new HashSet<string> { "Gluten" }
+        };
 
         var wielopak = new Wielopak<ProduktSpozywczy>()
         {
             Produkt = produktSpozywczy,
-            Ilosc = 5,
-            CenaNetto = 10
+            Ilosc = 10,
+            CenaNetto = 30
         };
 
-        Console.WriteLine($"Nazwa produktu: {wielopak.Produkt.Nazwa}");
+        Console.WriteLine("Informacje o produkcie:");
+        Console.WriteLine($"Nazwa: {wielopak.Produkt.Nazwa}");
+        Console.WriteLine($"Cena netto pojedynczego produktu: {wielopak.Produkt.CenaNetto}");
+        Console.WriteLine($"Kategoria VAT: {wielopak.Produkt.KategoriaVAT}");
         Console.WriteLine($"Cena brutto wielopaku: {wielopak.CenaBrutto}");
-        Console.WriteLine($"Kraj: {wielopak.KrajPochodzenia}");
-
-        Console.ReadLine();
+        Console.WriteLine($"Kraj pochodzenia: {wielopak.Produkt.KrajPochodzenia}");
+        Console.WriteLine($"Kalorie: {wielopak.Produkt.Kalorie}");
+        Console.WriteLine("Alergeny:");
+        foreach (var alergen in wielopak.Produkt.Alergeny)
+        {
+            Console.WriteLine(alergen);
+        }
     }
 }
+
